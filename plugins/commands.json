@@ -1,0 +1,44 @@
+{
+   "utility": {
+      "format": {
+         "synt": "format <required:type> [optional:type;default]",
+         "desc": "The format for command syntax."
+      }, "ping": {
+         "synt": "ping",
+         "desc": "Ping/pongs the user."
+      }, "help": {
+         "synt": "help [command:str;all]",
+         "desc": "Display a list of available commands."
+      }
+   }, "random": {
+      "flip": {
+         "synt": "flip [coin:str;quarter]",
+         "vars": {
+            "Coin": "The name of the coin"
+         },
+         "desc": "Flips a coin, heads or tails."
+      }, "random": {
+         "synt": "random [minv:int;1] [maxv:int;10]",
+         "vars": {
+            "MinV": "The minimum value",
+            "MaxV": "The maximum value"
+         },
+         "desc": "Generates a random number between minv and maxv."
+      }, "roll": {
+         "synt": "roll [die:int;1]",
+         "vars": {
+            "Die": "The amount of dice."
+         },
+         "desc": "Rolls any number of dice."
+      }
+   }, "steam": {
+      "steam": {
+         "synt": "steam <steamid:str> [action:str;info]",
+         "vars": {
+            "SteamID": "The Steam64ID or Steam Custom Address.",
+            "Action": "The command; info, status, game."
+         },
+         "desc": "Gets steam user information."
+      }
+   }
+}
