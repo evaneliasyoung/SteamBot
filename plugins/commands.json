@@ -6,6 +6,9 @@
       }, "ping": {
          "synt": "ping",
          "desc": "Ping/pongs the user."
+      }, "bot": {
+         "synt": "bot",
+         "desc": "Provides information about the bot."
       }, "help": {
          "synt": "help [command:str;all]",
          "desc": "Display a list of available commands."

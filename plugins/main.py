@@ -36,6 +36,13 @@ class Main(Plugin):
       """
       event.msg.reply("pong")
 
+   @Plugin.command("bot"):
+   def command_bot(self, event):
+      """Provides information about the bot
+      """
+      reply = ext_messge("About SteamBot (me!)", [f"**{k.title()}:** {e[k]}" for k in botinfo])
+      event.msg.reply(reply)
+
    @Plugin.command("help", "[command:str]")
    def command_help(self, event, command="all"):
       """Display a list of available commands
@@ -309,8 +316,10 @@ apicli = client.APIClient(config["token"])
 with open("plugins/commands.json", "r") as f:
    commands = json(f.read())
    cmdvalid = [cmd for key in commands for cmd in commands[key]]
-setprec().prec = 100
+with open("plugins/info.json", "r") as f:
+   botinfo = json(f.read())
 
+setprec().prec = 100
 def ext_typing(ch):
    apicli.channels_typing(ch)
 def ext_message(title, lines):
