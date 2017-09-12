@@ -1,10 +1,25 @@
-﻿from disco.bot import Plugin
+﻿# ██ ███    ███ ██████   ██████  ██████  ████████ ███████
+# ██ ████  ████ ██   ██ ██    ██ ██   ██    ██    ██
+# ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████
+# ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██
+# ██ ██      ██ ██       ██████  ██   ██    ██    ███████
+from disco.bot import Plugin
 from disco.api import client
 from disco.types.channel import ChannelType
+
 from yaml import load as yaml
 from json import loads as json
+
+import requests as req
+from bs4 import BeautifulSoup as bs
+
 from random import randint, choice
+from decimal import getcontext as setprec, Decimal as dec
+from math import factorial
+
 from datetime import date
+from dateutil.relativedelta import relativedelta as datedelta
+
 import steam
 
 
@@ -35,6 +50,78 @@ class Main(Plugin):
 
 
 
+   # ███    ███ ██ ███████  ██████
+   # ████  ████ ██ ██      ██
+   # ██ ████ ██ ██ ███████ ██
+   # ██  ██  ██ ██      ██ ██
+   # ██      ██ ██ ███████  ██████
+   @Plugin.command("birthday", "<people:int>", aliases=["bday"])
+   def command_birthday(self, event, people):
+      """Calculates the birtday problem
+      
+      Arguments:
+         people {int} -- The number of people
+      """
+      if(people > 365):
+         perc = 1
+      else:
+         fracTop = dec(factorial(365))
+         fracBot = dec((365**people)*factorial(365-people))
+         perc = 1-dec(fracTop/fracBot)
+      reply = f"In a room with {people} people, the percent that two of them share a birthday is {perc:.0%}"
+      if(people >= 55 and people <= 322):
+         reply += "\n*Actually it's closer to "
+         if(people >= 294):
+            reply += f"{perc:.100%}*"
+         elif(people >= 253):
+            reply += f"{perc:.75%}*"
+         elif(people >= 232):
+            reply += f"{perc:.50%}*"
+         elif(people >= 220):
+            reply += f"{perc:.40%}*"
+         elif(people >= 206):
+            reply += f"{perc:.35%}*"
+         elif(people >= 192):
+            reply += f"{perc:.30%}*"
+         elif(people >= 175):
+            reply += f"{perc:.25%}*"
+         elif(people >= 155):
+            reply += f"{perc:.20%}*"
+         elif(people >= 151):
+            reply += f"{perc:.15%}*"
+         elif(people >= 147):
+            reply += f"{perc:.14%}*"
+         elif(people >= 144):
+            reply += f"{perc:.13%}*"
+         elif(people >= 139):
+            reply += f"{perc:.12%}*"
+         elif(people >= 134):
+            reply += f"{perc:.11%}*"
+         elif(people >= 129):
+            reply += f"{perc:.10%}*"
+         elif(people >= 123):
+            reply += f"{perc:.9%}*"
+         elif(people >= 118):
+            reply += f"{perc:.8%}*"
+         elif(people >= 112):
+            reply += f"{perc:.7%}*"
+         elif(people >= 103):
+            reply += f"{perc:.6%}*"
+         elif(people >= 95):
+            reply += f"{perc:.5%}*"
+         elif(people >= 87):
+            reply += f"{perc:.4%}*"
+         elif(people >= 78):
+            reply += f"{perc:.3%}*"
+         elif(people >= 68):
+            reply += f"{perc:.2%}*"
+         elif(people >= 55):
+            reply += f"{perc:.1%}*"
+         
+      event.msg.reply(reply)
+
+
+
    # ██████   █████  ███    ██ ██████   ██████  ███    ███
    # ██   ██ ██   ██ ████   ██ ██   ██ ██    ██ ████  ████
    # ██████  ███████ ██ ██  ██ ██   ██ ██    ██ ██ ████ ██
@@ -48,8 +135,8 @@ class Main(Plugin):
          coin {str} -- The name of the coin (default: {"quarter"})
       """
       flip = randint(0, 1)
-      coin = "heads" if flip else "tails"
-      event.msg.reply(f"The {coin} landed {coin}")
+      val = "heads" if flip else "tails"
+      event.msg.reply(f"The {coin} landed {val}.")
 
    @Plugin.command("random", "[minv:int], [maxv:int]", aliases=["rand"])
    def command_random(self, event, minv=1, maxv=10):
@@ -59,7 +146,7 @@ class Main(Plugin):
          minv {int} -- Minumum random value (default: {1})
          maxv {int} -- Maximum random value (default: {10})
       """
-      event.msg.reply(f"The random gods have spoken, and they say {randint(minv, maxv)}")
+      event.msg.reply(f"The random gods have spoken, and they say {randint(minv, maxv)}.")
 
    @Plugin.command("roll", "[die:int]")
    def command_roll(self, event, die=1):
@@ -68,7 +155,73 @@ class Main(Plugin):
       Keyword Arguments:
          die {int} -- The number of dice (default: {1})
       """
-      event.msg.reply(f":game_die: rolled a {randint(1*die, 6*die)}")
+      event.msg.reply(f":game_die: rolled a {randint(1*die, 6*die)}.")
+
+
+
+   # ███    ███  ██████  ███    ██ ███████ ██    ██
+   # ████  ████ ██    ██ ████   ██ ██       ██  ██
+   # ██ ████ ██ ██    ██ ██ ██  ██ █████     ████
+   # ██  ██  ██ ██    ██ ██  ██ ██ ██         ██
+   # ██      ██  ██████  ██   ████ ███████    ██
+   @Plugin.command("inflation", "<amount:float>, <startyear:int>, [endyear:int]", aliases=["inflate", "infl"])
+   def command_inflation(self, event, amount, startyear, endyear=(date.today()-datedelta(months=2)).year):
+      """Calculates inflation in the US
+
+      Arguments:
+         amount {float} -- The amount of money to be inflated
+         startyear {int} -- The year the amount is valued in
+
+      Keyword Arguments:
+         endyear {int} -- The year to be calculated          (default: {(date.today()-datedelta(months=2)).year})
+      """
+      ext_typing(event.channel.id)
+      if(startyear < 1913):
+         event.msg.reply(f"I can't go back that far, 1913 is my minumum.")
+         return 0
+      else:
+         styr = f"{startyear}01"
+      if(endyear > (date.today()-datedelta(months=2)).year):
+         event.msg.reply(f"That hasn't happened yet!")
+         return 0
+      else:
+         edyr = f"{endyear}01"
+      amt = float(amount)
+      try:
+         res = req.get(f"https://data.bls.gov/cgi-bin/cpicalc.pl?cost1={amt}&year1={styr}&year2={edyr}")
+         soup = bs(res.text, "html.parser")
+         ans = soup.find(id="answer").string
+         event.msg.reply(f"${amt:.2f} in {startyear} has the same buying power as {ans:.2f} in {endyear}.")
+      except:
+         event.msg.reply(f"I can't seem to talk to the government right now :wink:.")
+
+   @Plugin.command("exchange",  "<amount:float>, <target:str>, [base:str]", aliases=["rate", "exch"])
+   def command_exchange(self, event, amount, target, base="USD"):
+      """Foreign currency exchange rate calculator
+
+      Arguments:
+         amount {float} -- The amount of the base currency
+         target {str} -- The target currency
+      
+      Keyword Arguments:
+         base {str} -- The base currency                 (default: {"USD"})
+      """
+      target, base = target.upper(), base.upper()
+      target = target.upper()
+      base = base.upper()
+      valid = ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD", "THB", "TRY", "ZAR", "EUR", "USD"]
+      if(target not in valid or base not in valid):
+         event.msg.reply("I'm sorry but I don't know that currency.")
+         print(target, base)
+         return 0
+      try:
+         dct = eval(req.get(f"http://api.fixer.io/latest?base={base}").text)['rates']
+      except:
+         event.msg.reply("I can't seem to connect to my exchange rate database.")
+         return 0
+
+      exc = amount*dct[target]
+      event.msg.reply(f"{amount:.2f} {base} is equal to {exc:.2f} {target}")
 
 
 
@@ -77,7 +230,7 @@ class Main(Plugin):
    # ███████    ██    █████   ███████ ██ ████ ██
    #      ██    ██    ██      ██   ██ ██  ██  ██
    # ███████    ██    ███████ ██   ██ ██      ██
-   @Plugin.command("steam", "<steamid:str> [action:str]")
+   @Plugin.command("steam", "<steamid:str>, [action:str]")
    def command_steam(self, event, steamid, action="info"):
       """Gets steam user information
       
@@ -87,9 +240,9 @@ class Main(Plugin):
       Keyword Arguments:
          action  {str} -- The action for steam       (default: {"info"})
       """
-      apicli.channels_typing(event.channel.id)
+      ext_typing(event.channel.id)
       if(action not in ["info", "game", "status"]):
-         event.msg.reply("I'm not sure I know what you mean")
+         event.msg.reply("I'm not sure I know what you mean.")
          return 0
       try:
          steamuser = steam.user(s64=steamid)
@@ -97,10 +250,10 @@ class Main(Plugin):
          try:
             steamuser = steam.user(sid=steamid)
          except:
-            event.msg.reply("I can't seem to find that Steam user")
+            event.msg.reply("I can't seem to find that Steam user.")
             return 0
       if(steamuser.private):
-         event.msg.reply("I'm really sorry, but that user is private")
+         event.msg.reply("I'm really sorry, but that user is private.")
          return 0
 
       if(action == "info"):
@@ -156,7 +309,10 @@ apicli = client.APIClient(config["token"])
 with open("plugins/commands.json", "r") as f:
    commands = json(f.read())
    cmdvalid = [cmd for key in commands for cmd in commands[key]]
+setprec().prec = 100
 
+def ext_typing(ch):
+   apicli.channels_typing(ch)
 def ext_message(title, lines):
    reply = f"__**{title}**__\n"
    lines = [li for li in lines if li != None]

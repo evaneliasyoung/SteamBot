@@ -10,6 +10,14 @@
          "synt": "help [command:str;all]",
          "desc": "Display a list of available commands."
       }
+   }, "misc": {
+      "birthday": {
+         "synt": "birthday <people:int>",
+         "vars": {
+            "people": "The number of people"
+         },
+         "desc": "Calculates the birtday problem"
+      }
    }, "random": {
       "flip": {
          "synt": "flip [coin:str;quarter]",
@@ -31,7 +39,26 @@
          },
          "desc": "Rolls any number of dice."
       }
-   }, "steam": {
+   }, "money": {
+      "inflation": {
+        "synt": "exchange <amount:float> <startyear:int> [endyear:int;2017]",
+        "vars": {
+           "Amount": "The amount of money to be inflated",
+           "StartYear": "The year the amount is valued in; must be after 1912",
+           "EndYear": "The year to be calculated; must be before two months ago"
+        },
+        "desc": "Calculates inflation in the US" 
+      },
+      "exchange": {
+         "synt": "inflation <amount:float> <target:str> [base:str;USD]",
+         "vars": {
+            "Amount": "The amount of the base currency",
+            "Target": "The target currency",
+            "Base": "The base currency"
+         },
+         "desc": "Foreign currency exchange rate calculator"
+      }
+   },"steam": {
       "steam": {
          "synt": "steam <steamid:str> [action:str;info]",
          "vars": {
