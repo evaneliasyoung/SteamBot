@@ -1,2 +1,4 @@
 *.pyc
 config.yaml
+start.sh
+start.cmd
