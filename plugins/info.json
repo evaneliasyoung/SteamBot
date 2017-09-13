@@ -1,9 +1,9 @@
 {
    "purpose": "Provide Steam user information, among other things",
-   "version": "2.2.1",
+   "version": "2.2.2",
    "date": "September 12, 2017",
-   "creator": "Evan Young @BritishMystry#6015",
-   "inspiration": "@Washingdone#7878",
-   "support": "@Polyhistori#0781",
+   "creator": "Evan Young <@219281641288368128>",
+   "inspiration": "<@136609221234917376>",
+   "support": "<@350879893212364801>",
    "github": "https://github.com/DocCodes/SteamBot/"
 }

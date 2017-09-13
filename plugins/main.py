@@ -36,11 +36,11 @@ class Main(Plugin):
       """
       event.msg.reply("pong")
 
-   @Plugin.command("bot"):
+   @Plugin.command("bot")
    def command_bot(self, event):
       """Provides information about the bot
       """
-      reply = ext_messge("About SteamBot (me!)", [f"**{k.title()}:** {e[k]}" for k in botinfo])
+      reply = ext_message("About SteamBot (me!)", [f"**{k.title()}:** {botinfo[k]}" for k in botinfo])
       event.msg.reply(reply)
 
    @Plugin.command("help", "[command:str]")
