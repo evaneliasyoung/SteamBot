@@ -312,12 +312,12 @@ class Main(Plugin):
 # ██████   ███████  ██████  ██████  ██   ██ ███████ ███████
 with open("config.yaml", "r") as f:
    config = yaml(f)
-apicli = client.APIClient(config["token"])
 with open("plugins/commands.json", "r") as f:
    commands = json(f.read())
    cmdvalid = [cmd for key in commands for cmd in commands[key]]
 with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
+apicli = client.APIClient(config["token"])
 
 setprec().prec = 100
 def ext_typing(ch):
