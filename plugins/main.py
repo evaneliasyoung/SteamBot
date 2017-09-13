@@ -3,9 +3,12 @@
 # ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████
 # ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██
 # ██ ██      ██ ██       ██████  ██   ██    ██    ███████
+from disco import cli
 from disco.bot import Plugin
-from disco.api import client
+from disco.api.client import APIClient
 from disco.types.channel import ChannelType
+from disco.types import user
+
 
 from yaml import load as yaml
 from json import loads as json
@@ -310,14 +313,15 @@ class Main(Plugin):
 # ██   ███ ██      ██    ██ ██████  ███████ ██      ███████
 # ██    ██ ██      ██    ██ ██   ██ ██   ██ ██           ██
 # ██████   ███████  ██████  ██████  ██   ██ ███████ ███████
-with open("config.yaml", "r") as f:
-   config = yaml(f)
 with open("plugins/commands.json", "r") as f:
    commands = json(f.read())
    cmdvalid = [cmd for key in commands for cmd in commands[key]]
 with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
-apicli = client.APIClient(config["token"])
+
+discli = cli.disco_main().client
+apicli = APIClient(discli.config.token)
+# discli.update_presence(user.Status.ONLINE, user.Game(user.GameType.DEFAULT, "Game", "http://www.steamcommunity.com/")) AttributeError: 'NoneType' object has no attribute 'send'
 
 setprec().prec = 100
 def ext_typing(ch):
