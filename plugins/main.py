@@ -1,4 +1,4 @@
-# ██ ███    ███ ██████   ██████  ██████  ████████ ███████
+﻿# ██ ███    ███ ██████   ██████  ██████  ████████ ███████
 # ██ ████  ████ ██   ██ ██    ██ ██   ██    ██    ██
 # ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████
 # ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██
@@ -8,7 +8,6 @@ from disco.bot import Plugin
 from disco.api.client import APIClient
 from disco.types.channel import ChannelType
 from disco.types import user
-
 
 from yaml import load as yaml
 from json import loads as json
@@ -43,7 +42,9 @@ class Main(Plugin):
    def command_bot(self, event):
       """Provides information about the bot
       """
-      reply = ext_message("About SteamBot (me!)", [f"**{k.title()}:** {botinfo[k]}" for k in botinfo])
+      reply = ["__**About SteamBot (me!)**__"]
+      [reply.append(f"**{k.title()}:** {botinfo[k]}") for k in botinfo]
+      reply = ext_message(reply)
       event.msg.reply(reply)
 
    @Plugin.command("help", "[command:str]")
@@ -57,6 +58,27 @@ class Main(Plugin):
          dm = event.author.open_dm()
          ext_print_help(dm.send_message, command)
          event.msg.reply(f"{event.author.mention}, Sent you a DM with information.")
+
+   @Plugin.command("announcement", "<time:str>, [title:str]")
+   def command_anc(self, event, time, title="New Lobby"):
+      """Makes a new announcement
+      
+      Arguments:
+         time {str} --  The time of the event
+      
+      Keyword Arguments:
+         title {str} -- The title of the announcement (default: {"New Lobby"})
+      """
+      ancChannel = self.state.channels.get(355006928314695680)
+      ancGuild = self.state.guilds(355006927836676099)
+      if(355007107952803842 in g.get_member(event.author).roles):
+         event.author.open_dm().send_message("You dn't have the right permissions to schedule an event")
+         return 0
+      ancChannel.send_message(ext_message([
+         ":mega:   __**Announcement**__   :mega:",
+         f"At **{time.replace('_', ' ')} CST** there will be a **{title.replace('_', ' ')}**",
+         "@everyone"
+      ]))
 
 
 
@@ -278,7 +300,8 @@ class Main(Plugin):
          #    f"Level {steamuser.level}, {steamuser.counts['badges']} Badges",
          #    f"{steamuser.counts['friends']} Friends, {steamuser.counts['groups']} Groups"
          # ])
-         reply = ext_message(f"Summary of {steamuser.persona}", [
+         reply = ext_message([
+            f"__**Summary of {steamuser.persona}**__",
             f"**Name:** {steamuser.name}" if steamuser.name else None,
             f"**Location:** {steamuser.location['contents']}" if steamuser.location else None,
             f"**Account Date:**{steamuser.date}" if steamuser.date else None,
@@ -326,8 +349,8 @@ apicli = APIClient(discli.config.token)
 setprec().prec = 100
 def ext_typing(ch):
    apicli.channels_typing(ch)
-def ext_message(title, lines):
-   reply = f"__**{title}**__\n"
+def ext_message(lines):
+   reply = ""
    lines = [li for li in lines if li != None]
    for line in lines:
       reply += f"{line}\n"
