@@ -72,7 +72,7 @@ class Main(Plugin):
       ancChannel = self.state.channels.get(355006928314695680)
       ancGuild = self.state.guilds(355006927836676099)
       if(355007107952803842 in g.get_member(event.author).roles):
-         event.author.open_dm().send_message("You dn't have the right permissions to schedule an event")
+         event.author.open_dm().send_message("You don't have the right permissions to schedule an event")
          return 0
       ancChannel.send_message(ext_message([
          ":mega:   __**Announcement**__   :mega:",
