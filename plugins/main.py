@@ -18,6 +18,7 @@ from bs4 import BeautifulSoup as bs
 from random import randint, choice
 from decimal import getcontext as setprec, Decimal as dec
 from math import factorial
+import re
 
 from datetime import date
 from dateutil.relativedelta import relativedelta as datedelta
@@ -151,6 +152,19 @@ class Main(Plugin):
             reply += f"{perc:.1%}*"
          
       event.msg.reply(reply)
+
+   @Plugin.command("math", "<equation:str>")
+   def command_math(self, event, equation):
+      """Solves mathematical equations
+      
+      Arguments:
+         equation {str} -- The equation to be solved
+      """
+      try:
+         ans = eval(re.sub("[^0-9/\-+%<>|*.()]", "", equation))
+         event.msg.reply(f"The answer is {ans:.2f}")
+      except:
+         event.msg.reply("That problem's too complicated for me. :sweat_smile:")
 
 
 
@@ -336,11 +350,10 @@ class Main(Plugin):
 # ██   ███ ██      ██    ██ ██████  ███████ ██      ███████
 # ██    ██ ██      ██    ██ ██   ██ ██   ██ ██           ██
 # ██████   ███████  ██████  ██████  ██   ██ ███████ ███████
-with open("plugins/commands.json", "r") as f:
-   commands = json(f.read())
-   cmdvalid = [cmd for key in commands for cmd in commands[key]]
 with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
+   commands = botinfo["commands"]
+   cmdvalid = [cmd for key in commands for cmd in commands[key]]
 
 botcli = cli.disco_main().client
 apicli = APIClient(botcli.config.token)

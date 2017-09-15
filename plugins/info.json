@@ -1,7 +1,7 @@
 {
    "purpose": "Provide Steam user information, among other things",
-   "version": "2.3.4",
-   "date": "September 14, 2017",
+   "version": "2.4.0",
+   "date": "September 15, 2017",
    "creator": "Evan (British Mystery#3398)",
    "inspiration": "Mark (Washingdone#7878)",
    "support": "Jon (Polyhistori#0781)",
@@ -29,6 +29,13 @@
                "people": "The number of people"
             },
             "desc": "Calculates the birtday problem"
+         },
+         "math": {
+            "synt": "math <equation:str>",
+            "vars": {
+               "equation": "The equation to be solved"
+            },
+            "desc": "Solves mathematical equations"
          }
       }, "random": {
          "flip": {
