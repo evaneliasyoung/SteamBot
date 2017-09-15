@@ -218,14 +218,14 @@ class Main(Plugin):
          return 0
       else:
          edyr = f"{endyear}01"
-      amt = float(amount)
+      amt = f"{amount:.2f}"
       try:
          res = req.get(f"https://data.bls.gov/cgi-bin/cpicalc.pl?cost1={amt}&year1={styr}&year2={edyr}")
          soup = bs(res.text, "html.parser")
          ans = soup.find(id="answer").string
-         event.msg.reply(f"${amt:.2f} in {startyear} has the same buying power as {ans:.2f} in {endyear}.")
+         event.msg.reply(f"${amt} in {startyear} has the same buying power as {ans} in {endyear}.")
       except:
-         event.msg.reply(f"I can't seem to talk to the government right now :wink:.")
+         event.msg.reply(f"I can't seem to talk to the government right now. :wink:")
 
    @Plugin.command("exchange",  "<amount:float>, <target:str>, [base:str]", aliases=["rate", "exch"])
    def command_exchange(self, event, amount, target, base="USD"):
@@ -342,9 +342,9 @@ with open("plugins/commands.json", "r") as f:
 with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
 
-discli = cli.disco_main().client
-apicli = APIClient(discli.config.token)
-# discli.update_presence(user.Status.ONLINE, user.Game(user.GameType.DEFAULT, "Game", "http://www.steamcommunity.com/")) AttributeError: 'NoneType' object has no attribute 'send'
+botcli = cli.disco_main().client
+apicli = APIClient(botcli.config.token)
+# botcli.update_presence(user.Status.ONLINE, user.Game(user.GameType.DEFAULT, "Game", "http://www.steamcommunity.com/")) AttributeError: 'NoneType' object has no attribute 'send'
 
 setprec().prec = 100
 def ext_typing(ch):
