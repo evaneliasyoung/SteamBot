@@ -241,8 +241,8 @@ class Main(Plugin):
       except:
          event.msg.reply(f"I can't seem to talk to the government right now. :wink:")
 
-   @Plugin.command("exchange",  "<amount:float>, <target:str>, [base:str]", aliases=["rate", "exch"])
-   def command_exchange(self, event, amount, target, base="USD"):
+   @Plugin.command("exchange",  "<amount:float>, <base:str>, <target:str>", aliases=["rate", "exch"])
+   def command_exchange(self, event, amount,  base, target):
       """Foreign currency exchange rate calculator
 
       Arguments:
