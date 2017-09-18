@@ -21,6 +21,7 @@ from math import factorial
 import re
 
 from datetime import date
+from time import localtime as lctime, gmtime
 from dateutil.relativedelta import relativedelta as datedelta
 
 import steam
@@ -72,12 +73,13 @@ class Main(Plugin):
       """
       ancChannel = self.state.channels.get(355006928314695680)
       ancGuild = self.state.guilds.get(355006927836676099)
+      utc = lctime().tm_hour-gmtime().tm_hour
       if(355007107952803842 not in ancGuild.get_member(event.author).roles):
          event.author.open_dm().send_message("You don't have the right permissions to schedule an event")
          return 0
       ancChannel.send_message(ext_message([
          ":mega:   __**Announcement**__   :mega:",
-         f"At **{time.replace('_', ' ')} CST** there will be a **{title.replace('_', ' ')}**",
+         f"At **{time.replace('_', ' ')} UTC{utc:+f}** there will be a **{title.replace('_', ' ')}**",
          "@everyone"
       ]))
 
