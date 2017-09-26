@@ -105,53 +105,7 @@ class Main(Plugin):
          perc = 1-dec(fracTop/fracBot)
       reply = f"In a room with {people} people, the percent that two of them share a birthday is {perc:.0%}"
       if(people >= 55 and people <= 322):
-         reply += "\n*Actually it's closer to "
-         if(people >= 294):
-            reply += f"{perc:.100%}*"
-         elif(people >= 253):
-            reply += f"{perc:.75%}*"
-         elif(people >= 232):
-            reply += f"{perc:.50%}*"
-         elif(people >= 220):
-            reply += f"{perc:.40%}*"
-         elif(people >= 206):
-            reply += f"{perc:.35%}*"
-         elif(people >= 192):
-            reply += f"{perc:.30%}*"
-         elif(people >= 175):
-            reply += f"{perc:.25%}*"
-         elif(people >= 155):
-            reply += f"{perc:.20%}*"
-         elif(people >= 151):
-            reply += f"{perc:.15%}*"
-         elif(people >= 147):
-            reply += f"{perc:.14%}*"
-         elif(people >= 144):
-            reply += f"{perc:.13%}*"
-         elif(people >= 139):
-            reply += f"{perc:.12%}*"
-         elif(people >= 134):
-            reply += f"{perc:.11%}*"
-         elif(people >= 129):
-            reply += f"{perc:.10%}*"
-         elif(people >= 123):
-            reply += f"{perc:.9%}*"
-         elif(people >= 118):
-            reply += f"{perc:.8%}*"
-         elif(people >= 112):
-            reply += f"{perc:.7%}*"
-         elif(people >= 103):
-            reply += f"{perc:.6%}*"
-         elif(people >= 95):
-            reply += f"{perc:.5%}*"
-         elif(people >= 87):
-            reply += f"{perc:.4%}*"
-         elif(people >= 78):
-            reply += f"{perc:.3%}*"
-         elif(people >= 68):
-            reply += f"{perc:.2%}*"
-         elif(people >= 55):
-            reply += f"{perc:.1%}*"
+         reply += f"\n*Actually it's closer to {perc:.50%}*"
          
       event.msg.reply(reply)
 
