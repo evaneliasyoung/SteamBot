@@ -9,7 +9,6 @@ from disco.api.client import APIClient
 from disco.types.channel import ChannelType
 from disco.types import user
 
-from yaml import load as yaml
 from json import loads as json
 
 import requests as req
@@ -79,7 +78,7 @@ class Main(Plugin):
          return 0
       ancChannel.send_message(ext_message([
          ":mega:   __**Announcement**__   :mega:",
-         f"At **{time.replace('_', ' ')} UTC{utc:+f}** there will be a **{title.replace('_', ' ')}**",
+         f"At **{time.replace('_', ' ')} (UTC{utc:+.0f})** there will be a **{title.replace('_', ' ')}**",
          "@everyone"
       ]))
 
