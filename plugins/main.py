@@ -116,7 +116,7 @@ class Main(Plugin):
          equation {str} -- The equation to be solved
       """
       try:
-         ans = eval(re.sub("[^0-9/\-+%<>|*.()]", "", equation))
+         ans = eval(re.sub("[^0-9\\|\\>\\<\\/\\.\\-\\+\\*\\*\\*\\)\\(\\%]", "", equation))
          event.msg.reply(f"The answer is {ans:.2f}")
       except:
          event.msg.reply("That problem's too complicated for me. :sweat_smile:")
