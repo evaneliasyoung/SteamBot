@@ -122,21 +122,25 @@ class Main(Plugin):
          event.msg.reply("That problem's too complicated for me. :sweat_smile:")
 
    @Plugin.command("snapple", "[fact:int]")
-   def command_snapple(self, event, fact=randint(5, 995)):
+   def command_snapple(self, event, fact="random"):
       """Get a Snapple Real Fact
       
       Keyword Arguments:
-         fact {int} -- The fact number (default: {randint(5, 995)})
+         fact {int} -- The fact number (default: {random})
       """
       try:
          res = req.get("https://www.snapple.com/real-facts")
          soup = bs(res.text, "html.parser")
-         elm = soup.find(id="fact-list").find(value=fact)
-         if(elm == None):
-            msg.reply("Sorry, Snapple retired that fact.")
+         if(fact == "random"):
+            elm = choice(soup.find(id="fact-list").findAll("li"))
          else:
-            msg.reply(ext_message([
-               f"**Snapple Real Fact #{fact}**",
+            elm = soup.find(id="fact-list").find(value=fact)
+
+         if(elm == None):
+            event.msg.reply("Sorry, Snapple retired that fact.")
+         else:
+            event.msg.reply(ext_message([
+               f"**Snapple Real Fact #{elm.attrs['value']}**",
                elm.find("a").text
             ]))
       except:
