@@ -1,1 +1,1 @@
-worker: python3 -m disco.cli --config config.yaml --token $TOKEN
+worker: python3 -m disco.cli --config config.yaml
