@@ -1,1 +1,1 @@
-worker: python3 -m disco.cli --config config.yaml --token="$TOKEN" --run-bot
+worker: python3 -m disco.cli --config config.yaml --token MzU1MTY3MDc3MzM1ODI2NDMy.DJiYKg.f0qXffBnNOO-g2cPROXJHbI-s_U
