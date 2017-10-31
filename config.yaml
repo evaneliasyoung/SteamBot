@@ -1,0 +1,5 @@
+bot:
+  plugins:
+    - plugins.main
+  commands_require_mention: false
+  commands_prefix: "!"
