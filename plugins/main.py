@@ -352,7 +352,7 @@ def ext_print_help(ctx, command):
       if(command == "all" or command not in cmdvalid):
          reply = "Use `help <command>` to view detailed information about a specific command."
          reply += "\nUse `help all` to view a list of all commands, not just available ones."
-         reply += "\n\n__**Available Commands in British History**__\n"
+         reply += "\n\n__**Available Commands**__\n"
          for key in commands:
             reply += f"\n__{key.title()}__"
             for comm in commands[key]:
