@@ -153,7 +153,7 @@ class Main(Plugin):
    # ██████  ███████ ██ ██  ██ ██   ██ ██    ██ ██ ████ ██
    # ██   ██ ██   ██ ██  ██ ██ ██   ██ ██    ██ ██  ██  ██
    # ██   ██ ██   ██ ██   ████ ██████   ██████  ██      ██
-   @Plugin.command("flip", "[coin:str")
+   @Plugin.command("flip", "[coin:str]")
    def command_flip(self, event, coin="quarter"):
       """Flips a coin, heads or tails
 
