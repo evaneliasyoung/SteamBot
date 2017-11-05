@@ -199,7 +199,7 @@ class Main(Plugin):
          startyear {int} -- The year the amount is valued in
 
       Keyword Arguments:
-         endyear {int} -- The year to be calculated          (default: {(date.today()-datedelta(months=2)).year})
+         endyear {int} -- The year to be calculated (default: {(date.today()-datedelta(months=2)).year})
       """
       ext_typing(event.channel.id)
       if(startyear < 1913):
@@ -230,7 +230,7 @@ class Main(Plugin):
          target {str} -- The target currency
       
       Keyword Arguments:
-         base {str} -- The base currency                 (default: {"USD"})
+         base {str} -- The base currency (default: {"USD"})
       """
       target, base = target.upper(), base.upper()
       target = target.upper()
