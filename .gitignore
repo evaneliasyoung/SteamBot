@@ -1,3 +1,4 @@
 *.pyc
 config.yaml
 nohup.out
+private.json

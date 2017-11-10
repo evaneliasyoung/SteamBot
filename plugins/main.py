@@ -13,6 +13,7 @@ from json import loads as json
 
 import requests as req
 from bs4 import BeautifulSoup as bs
+import praw
 
 from random import randint, choice
 from decimal import getcontext as setprec, Decimal as dec
@@ -145,6 +146,30 @@ class Main(Plugin):
             ]))
       except:
          event.msg.reply("I'm having trouble connecting to Snapple right now. :confused:")
+
+   @Plugin.command("reddit", "<url:str>")
+   def command_reddit(self, event, url):
+      """Gets a Reddit post
+
+      Arguments:
+         url {str} -- The url of the post
+      """
+      try:
+         post = RDT.submission(url=url)
+         if(event.channel.type.value == ChannelType.DM.value):
+            event.msg.reply("This doesn't work in DMs, try it in a *real* server")
+         else:
+            li = [event.guild.channels.get(c) for c in event.guild.channels]
+            for ch in li:
+               if(ch.name == "redditpost"):
+                  ch.send_message(ext_message([
+                     f":clipboard: | **{post.title}**",
+                     f":thumbsup: | {post.ups}",
+                     f":bust_in_silhouette: | {post.author}",
+                     post.url
+                  ]))
+      except:
+         event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
 
 
 
@@ -334,14 +359,21 @@ with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
    commands = botinfo["commands"]
    cmdvalid = [cmd for key in commands for cmd in commands[key]]
+with open("plugins/private.json", "r") as f:
+   rdtinfo = json(f.read())["reddit"]
+   RDT = praw.Reddit(
+      client_id=rdtinfo["client_id"],
+      client_secret=rdtinfo["client_secret"],
+      user_agent=rdtinfo["user_agent"]
+   )
 
-botcli = cli.disco_main().client
-apicli = APIClient(botcli.config.token)
-# botcli.update_presence(user.Status.ONLINE, user.Game(user.GameType.DEFAULT, "Game", "http://www.steamcommunity.com/")) AttributeError: 'NoneType' object has no attribute 'send'
+BOTCLI = cli.disco_main().client
+APICLI = APIClient(BOTCLI.config.token)
+
 
 setprec().prec = 100
 def ext_typing(ch):
-   apicli.channels_typing(ch)
+   APICLI.channels_typing(ch)
 def ext_message(lines):
    reply = ""
    lines = [li for li in lines if li != None]
