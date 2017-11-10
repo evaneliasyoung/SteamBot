@@ -1,13 +1,12 @@
 {
-   "purpose": "Provide Steam user information, among other things",
-   "version": "2.6.0",
-   "date": "November 9, 2017",
-   "creator": "Evan (British Mystery#3398)",
-   "inspiration": "Mark (Washingdone#7878)",
-   "support": "Jon (Polyhistori#0781)",
+   "purpose": "I'm in charge of providing Steam user information, among other things",
+   "version": "2.6.2",
+   "date": "November 10, 2017",
+   "author": "British Mystery#3398",
+   "inspiration": "Washingdone#7878",
    "github": "https://github.com/DocCodes/SteamBot/",
 
-   "commands" : {
+   "commands": {
       "utility": {
          "format": {
             "synt": "format <required:type> [optional:type;default]",
@@ -28,7 +27,7 @@
             "vars": {
                "people": "The number of people"
             },
-            "desc": "Calculates the birtday problem"
+            "desc": "Calculates the birthday problem"
          },
          "math": {
             "synt": "math <equation:str>",
@@ -66,11 +65,12 @@
             },
             "desc": "Generates a random number between minv and maxv."
          }, "roll": {
-            "synt": "roll [die:int;1]",
+            "synt": "roll [die:int;1] [sides:int;6]",
             "vars": {
-               "Die": "The amount of dice."
+               "Die": "The amount of dice.",
+               "Sides": "The sides on each die."
             },
-            "desc": "Rolls any number of dice."
+            "desc": "Rolls any number of dice with any number of sides."
          }
       }, "money": {
          "inflation": {

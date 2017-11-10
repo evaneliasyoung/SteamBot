@@ -44,10 +44,15 @@ class Main(Plugin):
    def command_bot(self, event):
       """Provides information about the bot
       """
-      reply = ["__**About SteamBot (me!)**__"]
-      [reply.append(f"**{k.title()}:** {botinfo[k]}") for k in botinfo]
-      reply = ext_message(reply)
-      event.msg.reply(reply)
+      mbd = ext_embed("", [
+         {"name": ":wave: I'm SteamBot!", "value": botinfo["purpose"], "inl": False},
+         {"name": "Author", "value": botinfo["author"], "inl": True},
+         {"name": "Library", "value": "[disco.py / Python](https://github.com/b1naryth1ef/disco)", "inl": True},
+         {"name": "Version", "value": botinfo["version"], "inl": True},
+         {"name": "Source", "value": botinfo["github"], "inl": True},
+         {"name": "Date", "value": botinfo["date"], "inl": True}
+      ], 0x003366)
+      event.msg.reply("**:information_source:  |  Please ensure you have embeds enabled!**", embed = mbd)
 
    @Plugin.command("help", "[command:str]")
    def command_help(self, event, command="all"):
@@ -171,7 +176,7 @@ class Main(Plugin):
                      ],
                      0xFF4500
                   )
-                  ch.send_message(embed=mbd)
+                  ch.send_message("**:information_source:  |  Please ensure you have embeds enabled!**", embed=mbd)
       except:
          event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
 
@@ -203,14 +208,21 @@ class Main(Plugin):
       """
       event.msg.reply(f"The random gods have spoken, and they say {randint(minv, maxv)}.")
 
-   @Plugin.command("roll", "[die:int]")
-   def command_roll(self, event, die=1):
-      """Rolls any number of dice
+   @Plugin.command("roll", "[die:int], [sides:int]")
+   def command_roll(self, event, die=1, sides=6):
+      """Rolls any number of dice with any number of sides
 
       Keyword Arguments:
-         die {int} -- The number of dice (default: {1})
+         die   {int} -- The number of dice (default: {1})
+         sides {int} -- The sides on a die (default: {6})
       """
-      event.msg.reply(f":game_die: rolled a {randint(1*die, 6*die)}.")
+      rolls = []
+      for i in range(die):
+         rolls.append(randint(1, sides))
+      msg = f":game_die: {die}d{sides}  |  Result: {sum(rolls)}"
+      if(die > 1):
+         msg += f"\n```js\n{' '.join([str(r) for r in rolls])}```"
+      event.msg.reply(msg)
 
 
 
@@ -362,6 +374,7 @@ class Main(Plugin):
 with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
    commands = botinfo["commands"]
+   del botinfo["commands"]
    cmdvalid = [cmd for key in commands for cmd in commands[key]]
 with open("plugins/private.json", "r") as f:
    rdtinfo = json(f.read())["reddit"]
@@ -387,6 +400,16 @@ def ext_message(lines):
    return reply
 
 def ext_embed(title, fields, color):
+   """Creates an embed object
+
+   Arguments:
+      title {string} -- The message titlte
+      fields {array} -- The fields
+      color {hex} -- The color in hex
+   
+   Returns:
+      embed -- The embed object
+   """
    mbd = message.MessageEmbed()
    mbd.title = title
    for field in fields:
@@ -396,14 +419,14 @@ def ext_embed(title, fields, color):
 
 def ext_print_help(ctx, command):
       if(command == "all" or command not in cmdvalid):
-         reply = "Use `help <command>` to view detailed information about a specific command."
-         reply += "\nUse `help all` to view a list of all commands, not just available ones."
-         reply += "\n\n__**Available Commands**__\n"
+         reply = "__**Available Commands**__\n```md"
          for key in commands:
-            reply += f"\n__{key.title()}__"
+            reply += f"\n# {key.title()}:"
             for comm in commands[key]:
-               reply += f"\n**{comm}:** {commands[key][comm]['desc']}"
+               reply += f"\n  {comm:<9} // {commands[key][comm]['desc']}"
             reply += "\n"
+         reply += "```\n\nUse `help <command>` to view detailed information about a specific command."
+         reply += "\nUse `help all` to view a list of all commands, not just available ones."
       elif(command in cmdvalid):
          batch = [key for key in commands if command in commands[key]][0]
          reply = f"__**Information About {command.title()}**__\n"
