@@ -7,7 +7,7 @@ from disco import cli
 from disco.bot import Plugin
 from disco.api.client import APIClient
 from disco.types.channel import ChannelType
-from disco.types import user
+from disco.types import message
 
 from json import loads as json
 
@@ -162,12 +162,16 @@ class Main(Plugin):
             li = [event.guild.channels.get(c) for c in event.guild.channels]
             for ch in li:
                if(ch.name == "redditpost"):
-                  ch.send_message(ext_message([
-                     f":clipboard: | **{post.title}**",
-                     f":thumbsup: | {post.ups}",
-                     f":bust_in_silhouette: | {post.author}",
-                     post.url
-                  ]))
+                  mbd = ext_embed(
+                     f":clipboard: | {post.title}",
+                     [
+                        {"name": ":thumbsup:", "value": f"{post.ups} ups, {(post.ups//post.upvote_ratio)-post.ups} downs", "inl": 1},
+                        {"name": ":bust_in_silhouette:", "value": f"{post.author}, {post.author.link_karma} karma", "inl": 1}
+
+                     ],
+                     0xFF4500
+                  )
+                  ch.send_message(embed=mbd)
       except:
          event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
 
@@ -374,12 +378,22 @@ APICLI = APIClient(BOTCLI.config.token)
 setprec().prec = 100
 def ext_typing(ch):
    APICLI.channels_typing(ch)
+
 def ext_message(lines):
    reply = ""
    lines = [li for li in lines if li != None]
    for line in lines:
       reply += f"{line}\n"
    return reply
+
+def ext_embed(title, fields, color):
+   mbd = message.MessageEmbed()
+   mbd.title = title
+   for field in fields:
+      mbd.add_field(name=field["name"], value=field["value"], inline=field["inl"])
+   mbd.color = color
+   return mbd
+
 def ext_print_help(ctx, command):
       if(command == "all" or command not in cmdvalid):
          reply = "Use `help <command>` to view detailed information about a specific command."
