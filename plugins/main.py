@@ -45,12 +45,12 @@ class Main(Plugin):
       """Provides information about the bot
       """
       mbd = ext_embed("", [
-         {"name": ":wave: I'm SteamBot!", "value": botinfo["purpose"], "inl": False},
-         {"name": "Author", "value": botinfo["author"], "inl": True},
-         {"name": "Library", "value": "[disco.py / Python](https://github.com/b1naryth1ef/disco)", "inl": True},
-         {"name": "Version", "value": botinfo["version"], "inl": True},
-         {"name": "Source", "value": botinfo["github"], "inl": True},
-         {"name": "Date", "value": botinfo["date"], "inl": True}
+         {"name": ":wave: I'm SteamBot!", "value": botinfo["purpose"], "inl": 0},
+         {"name": "Author", "value": botinfo["author"], "inl": 1},
+         {"name": "Library", "value": "[disco.py / Python](https://github.com/b1naryth1ef/disco)", "inl": 1},
+         {"name": "Version", "value": botinfo["version"], "inl": 1},
+         {"name": "Source", "value": botinfo["github"], "inl": 1},
+         {"name": "Date", "value": botinfo["date"], "inl": 1}
       ], 0x003366)
       event.msg.reply("**:information_source:  |  Please ensure you have embeds enabled!**", embed = mbd)
 
@@ -168,14 +168,22 @@ class Main(Plugin):
             for ch in li:
                if(ch.name == "redditpost"):
                   mbd = ext_embed(
-                     f":clipboard: | {post.title}",
+                     f":clipboard:  |  {post.title}",
                      [
-                        {"name": ":thumbsup:", "value": f"{post.ups} ups, {(post.ups//post.upvote_ratio)-post.ups} downs", "inl": 1},
-                        {"name": ":bust_in_silhouette:", "value": f"{post.author}, {post.author.link_karma} karma", "inl": 1}
-
+                        {"name": ":thumbsup:", "value": f"{post.ups} ups, {int((post.ups//post.upvote_ratio)-post.ups)} downs", "inl": 1},
+                        {"name": ":bust_in_silhouette:", "value": f"{post.author}, {post.author.link_karma} karma", "inl": 1},
+                        {"name": ":globe_with_meridians:", "value": f"[original post]({url})", "inl": 1}
                      ],
                      0xFF4500
                   )
+                  if(post.is_self):
+                     mbd.add_field(name=":newspaper:", value=post.selftext)
+                  elif(post.url.endswith("png") or post.url.endswith("jpg") or post.url.endswith("jpeg") or post.url.endswith("gif") or post.url.endswith("gifv")):
+                     print("img")
+                     mbd.set_image(url=post.url)
+                  else:
+                     mbd.add_field(name=":newspaper:", value=post.url)
+
                   ch.send_message("**:information_source:  |  Please ensure you have embeds enabled!**", embed=mbd)
       except:
          event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
