@@ -52,7 +52,7 @@ class Main(Plugin):
          {"name": "Source", "value": botinfo["github"], "inl": 1},
          {"name": "Date", "value": botinfo["date"], "inl": 1}
       ], 0x003366)
-      event.msg.reply("**:information_source:  |  Please ensure you have embeds enabled!**", embed = mbd)
+      event.msg.reply(embed = mbd)
 
    @Plugin.command("help", "[command:str]")
    def command_help(self, event, command="all"):
@@ -184,7 +184,7 @@ class Main(Plugin):
                   else:
                      mbd.add_field(name=":newspaper:", value=post.url)
 
-                  ch.send_message("**:information_source:  |  Please ensure you have embeds enabled!**", embed=mbd)
+                  ch.send_message(embed=mbd)
       except:
          event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
 
