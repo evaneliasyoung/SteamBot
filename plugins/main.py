@@ -3,6 +3,7 @@
 # ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████
 # ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██
 # ██ ██      ██ ██       ██████  ██   ██    ██    ███████
+# <region> Imports
 from disco import cli
 from disco.bot import Plugin
 from disco.api.client import APIClient
@@ -25,7 +26,7 @@ from time import localtime as lctime, gmtime
 from dateutil.relativedelta import relativedelta as datedelta
 
 import steam
-
+# </region>
 
 
 class Main(Plugin):
@@ -34,6 +35,7 @@ class Main(Plugin):
    # ██    ██    ██    ██ ██      ██    ██      ████
    # ██    ██    ██    ██ ██      ██    ██       ██
    #  ██████     ██    ██ ███████ ██    ██       ██
+   # <region> Utility
    @Plugin.command("ping")
    def command_ping(self, event):
       """Ping/pongs the user
@@ -69,10 +71,10 @@ class Main(Plugin):
    @Plugin.command("announcement", "<time:str>, [title:str]")
    def command_anc(self, event, time, title="New Lobby"):
       """Makes a new announcement
-      
+
       Arguments:
          time {str} --  The time of the event
-      
+
       Keyword Arguments:
          title {str} -- The title of the announcement (default: {"New Lobby"})
       """
@@ -87,18 +89,18 @@ class Main(Plugin):
          f"At **{time.replace('_', ' ')} (UTC{utc:+.0f})** there will be a **{title.replace('_', ' ')}**",
          "@everyone"
       ]))
-
-
+   # </region>
 
    # ███    ███ ██ ███████  ██████
    # ████  ████ ██ ██      ██
    # ██ ████ ██ ██ ███████ ██
    # ██  ██  ██ ██      ██ ██
    # ██      ██ ██ ███████  ██████
+   # <region> Miscellaneous
    @Plugin.command("birthday", "<people:int>", aliases=["bday"])
    def command_birthday(self, event, people):
       """Calculates the birtday problem
-      
+
       Arguments:
          people {int} -- The number of people
       """
@@ -111,13 +113,13 @@ class Main(Plugin):
       reply = f"In a room with {people} people, the percent that two of them share a birthday is {perc:.0%}"
       if(people >= 55 and people <= 322):
          reply += f"\n*Actually it's closer to {perc:.50%}*"
-         
+
       event.msg.reply(reply)
 
    @Plugin.command("math", "<equation:str>")
    def command_math(self, event, equation):
       """Solves mathematical equations
-      
+
       Arguments:
          equation {str} -- The equation to be solved
       """
@@ -130,7 +132,7 @@ class Main(Plugin):
    @Plugin.command("snapple", "[fact:int]")
    def command_snapple(self, event, fact="random"):
       """Get a Snapple Real Fact
-      
+
       Keyword Arguments:
          fact {int} -- The fact number (default: {random})
       """
@@ -187,14 +189,14 @@ class Main(Plugin):
                   ch.send_message(embed=mbd)
       except:
          event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
-
-
+   # </region>
 
    # ██████   █████  ███    ██ ██████   ██████  ███    ███
    # ██   ██ ██   ██ ████   ██ ██   ██ ██    ██ ████  ████
    # ██████  ███████ ██ ██  ██ ██   ██ ██    ██ ██ ████ ██
    # ██   ██ ██   ██ ██  ██ ██ ██   ██ ██    ██ ██  ██  ██
    # ██   ██ ██   ██ ██   ████ ██████   ██████  ██      ██
+   # <region> Random
    @Plugin.command("flip", "[coin:str]")
    def command_flip(self, event, coin="quarter"):
       """Flips a coin, heads or tails
@@ -231,14 +233,14 @@ class Main(Plugin):
       if(die > 1):
          msg += f"\n```js\n{' '.join([str(r) for r in rolls])}```"
       event.msg.reply(msg)
-
-
+   # </region>
 
    # ███    ███  ██████  ███    ██ ███████ ██    ██
    # ████  ████ ██    ██ ████   ██ ██       ██  ██
    # ██ ████ ██ ██    ██ ██ ██  ██ █████     ████
    # ██  ██  ██ ██    ██ ██  ██ ██ ██         ██
    # ██      ██  ██████  ██   ████ ███████    ██
+   # <region> Money
    @Plugin.command("inflation", "<amount:float>, <startyear:int>, [endyear:int]", aliases=["inflate", "infl"])
    def command_inflation(self, event, amount, startyear, endyear=(date.today()-datedelta(months=2)).year):
       """Calculates inflation in the US
@@ -277,7 +279,7 @@ class Main(Plugin):
       Arguments:
          amount {float} -- The amount of the base currency
          target {str} -- The target currency
-      
+
       Keyword Arguments:
          base {str} -- The base currency (default: {"USD"})
       """
@@ -297,18 +299,18 @@ class Main(Plugin):
 
       exc = amount*dct[target]
       event.msg.reply(f"{amount:.2f} {base} is equal to {exc:.2f} {target}")
-
-
+   # </region>
 
    # ███████ ████████ ███████  █████  ███    ███
    # ██         ██    ██      ██   ██ ████  ████
    # ███████    ██    █████   ███████ ██ ████ ██
    #      ██    ██    ██      ██   ██ ██  ██  ██
    # ███████    ██    ███████ ██   ██ ██      ██
+   # <region> Steam
    @Plugin.command("steam", "<steamid:str>, [action:str]")
    def command_steam(self, event, steamid, action="info"):
       """Gets steam user information
-      
+
       Arguments:
          steamid {str} -- The user's Steam64 address or custom address
 
@@ -371,6 +373,7 @@ class Main(Plugin):
             dt = date.fromtimestamp(game.last)
             reply += f", {steamuser.persona} has played for {tmad} and last played it on {dt.month}/{dt.day}/{dt.year}."
          event.msg.reply(reply)
+   # </region>
 
 
 
@@ -379,6 +382,7 @@ class Main(Plugin):
 # ██   ███ ██      ██    ██ ██████  ███████ ██      ███████
 # ██    ██ ██      ██    ██ ██   ██ ██   ██ ██           ██
 # ██████   ███████  ██████  ██████  ██   ██ ███████ ███████
+# <region> Globals
 with open("plugins/info.json", "r") as f:
    botinfo = json(f.read())
    commands = botinfo["commands"]
@@ -414,7 +418,7 @@ def ext_embed(title, fields, color):
       title {string} -- The message titlte
       fields {array} -- The fields
       color {hex} -- The color in hex
-   
+
    Returns:
       embed -- The embed object
    """
@@ -445,3 +449,4 @@ def ext_print_help(ctx, command):
             for var in commands[batch][command]['vars']:
                reply += f"\n**{var}:** {commands[batch][command]['vars'][var]}"
       ctx(reply)
+# </region>
