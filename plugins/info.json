@@ -1,105 +1,121 @@
 {
-   "purpose": "I'm in charge of providing Steam user information, among other things",
-   "version": "2.6.4",
-   "date": "November 15, 2017",
-   "author": "British Mystery#3398",
-   "inspiration": "Washingdone#7878",
-   "github": "https://github.com/DocCodes/SteamBot/",
+  "purpose": "I'm in charge of providing Steam user information, among other things",
+  "version": "2.7.0",
+  "date": "February 1, 2017",
+  "author": "British Mystery#3398",
+  "inspiration": "Washingdone#7878",
+  "github": "https://github.com/DocCodes/SteamBot/",
 
-   "commands": {
-      "utility": {
-         "format": {
-            "synt": "format <required:type> [optional:type;default]",
-            "desc": "The format for command syntax."
-         }, "ping": {
-            "synt": "ping",
-            "desc": "Ping/pongs the user."
-         }, "bot": {
-            "synt": "bot",
-            "desc": "Provides information about the bot."
-         }, "help": {
-            "synt": "help [command:str;all]",
-            "desc": "Display a list of available commands."
-         }
-      }, "misc": {
-         "birthday": {
-            "synt": "birthday <people:int>",
-            "vars": {
-               "people": "The number of people"
-            },
-            "desc": "Calculates the birthday problem"
-         },
-         "math": {
-            "synt": "math <equation:str>",
-            "vars": {
-               "equation": "The equation to be solved"
-            },
-            "desc": "Solves mathematical equations"
-         },
-         "snapple": {
-            "synt": "snapple [fact:int]",
-            "vars": {
-               "fact": "The fact number"
-            },
-            "desc": "Get a Snapple Real Fact"
-         },
-         "reddit": {
-            "synt": "reddit <url:str>",
-            "vars": {
-               "url": "The post's url"
-            },
-            "desc": "Gets a Reddit post"
-         }
-      }, "random": {
-         "flip": {
-            "synt": "flip [coin:str;quarter]",
-            "vars": {
-               "Coin": "The name of the coin"
-            },
-            "desc": "Flips a coin, heads or tails."
-         }, "random": {
-            "synt": "random [minv:int;1] [maxv:int;10]",
-            "vars": {
-               "MinV": "The minimum value",
-               "MaxV": "The maximum value"
-            },
-            "desc": "Generates a random number between minv and maxv."
-         }, "roll": {
-            "synt": "roll [die:int;1] [sides:int;6]",
-            "vars": {
-               "Die": "The amount of dice.",
-               "Sides": "The sides on each die."
-            },
-            "desc": "Rolls any number of dice with any number of sides."
-         }
-      }, "money": {
-         "inflation": {
-           "synt": "exchange <amount:float> <startyear:int> [endyear:int;2017]",
-           "vars": {
-              "Amount": "The amount of money to be inflated",
-              "StartYear": "The year the amount is valued in; must be after 1912",
-              "EndYear": "The year to be calculated; must be before two months ago"
-           },
-           "desc": "Calculates inflation in the US" 
-         },
-         "exchange": {
-            "synt": "inflation <amount:float> [base:str] <target:str>",
-            "vars": {
-               "Amount": "The amount of the base currency",
-               "Base": "The base currency",
-               "Target": "The target currency"
-            },
-            "desc": "Foreign currency exchange rate calculator"
-         }
-      },"steam": {
-         "steam": {
-            "synt": "steam <steamid:str> [action:str;info]",
-            "vars": {
-               "SteamID": "The Steam64ID or Steam Custom Address.",
-               "Action": "The command; info, status, game."
-            },
-            "desc": "Gets steam user information."
-         }
+  "commands": {
+    "utility": {
+      "format": {
+        "synt": "format <required:type> [optional:type;default]",
+        "desc": "The format for command syntax."
+      },
+      "ping": {
+        "synt": "ping",
+        "desc": "Ping/pongs the user."
+      },
+      "bot": {
+        "synt": "bot",
+        "desc": "Provides information about the bot."
+      },
+      "help": {
+        "synt": "help [command:str;all]",
+        "desc": "Display a list of available commands."
       }
-   }
+    },
+    "misc": {
+      "birthday": {
+        "synt": "birthday <people:int>",
+        "vars": {
+          "people": "The number of people"
+        },
+        "desc": "Calculates the birthday problem"
+      },
+      "math": {
+        "synt": "math <equation:str>",
+        "vars": {
+          "equation": "The equation to be solved"
+        },
+        "desc": "Solves mathematical equations"
+      },
+      "snapple": {
+        "synt": "snapple [fact:int]",
+        "vars": {
+          "fact": "The fact number"
+        },
+        "desc": "Get a Snapple Real Fact"
+      },
+      "reddit": {
+        "synt": "reddit <url:str>",
+        "vars": {
+          "url": "The post's url"
+        },
+        "desc": "Gets a Reddit post"
+      },
+      "tiny": {
+        "synt": "tiny <text:str>",
+        "vars": {
+          "text": "The text to make tiny"
+        },
+        "desc": "Makes text tiny (_ is the space character)"
+      }
+    },
+    "random": {
+      "flip": {
+        "synt": "flip [coin:str;quarter]",
+        "vars": {
+          "Coin": "The name of the coin"
+        },
+        "desc": "Flips a coin, heads or tails."
+      },
+      "random": {
+        "synt": "random [minv:int;1] [maxv:int;10]",
+        "vars": {
+          "MinV": "The minimum value",
+          "MaxV": "The maximum value"
+        },
+        "desc": "Generates a random number between minv and maxv."
+      },
+      "roll": {
+        "synt": "roll [die:int;1] [sides:int;6]",
+        "vars": {
+          "Die": "The amount of dice.",
+          "Sides": "The sides on each die."
+        },
+        "desc": "Rolls any number of dice with any number of sides."
+      }
+    },
+    "money": {
+      "inflation": {
+        "synt": "exchange <amount:float> <startyear:int> [endyear:int;2017]",
+        "vars": {
+          "Amount": "The amount of money to be inflated",
+          "StartYear": "The year the amount is valued in; must be after 1912",
+          "EndYear": "The year to be calculated; must be before two months ago"
+        },
+        "desc": "Calculates inflation in the US"
+      },
+      "exchange": {
+        "synt": "inflation <amount:float> [base:str] <target:str>",
+        "vars": {
+          "Amount": "The amount of the base currency",
+          "Base": "The base currency",
+          "Target": "The target currency"
+        },
+        "desc": "Foreign currency exchange rate calculator"
+      }
+    },
+    "steam": {
+      "steam": {
+        "synt": "steam <steamid:str> [action:str;info]",
+        "vars": {
+          "SteamID": "The Steam64ID or Steam Custom Address.",
+          "Action": "The command; info, status, game."
+        },
+        "desc": "Gets steam user information."
+      }
+    }
+  }
 }
