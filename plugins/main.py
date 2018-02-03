@@ -189,6 +189,7 @@ class Main(Plugin):
                   ch.send_message(embed=mbd)
       except:
          event.msg.reply("I'm having trouble connecting to Reddit right now. :scream:")
+      event.msg.delete()
 
    @Plugin.command("tiny", "<text:str>")
    def command_tiny(self, event, text):
