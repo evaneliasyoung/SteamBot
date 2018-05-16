@@ -1,7 +1,7 @@
 {
   "purpose": "I'm in charge of providing Steam user information, among other things",
-  "version": "2.7.1",
-  "date": "February 2, 2017",
+  "version": "2.7.2",
+  "date": "May 5, 2018",
   "author": "British Mystery#3398",
   "inspiration": "Washingdone#7878",
   "github": "https://github.com/DocCodes/SteamBot/",
@@ -10,7 +10,7 @@
     "utility": {
       "format": {
         "synt": "format <required:type> [optional:type;default]",
-        "desc": "The format for command syntax."
+        "desc": "The format for command syntax (not really a command)."
       },
       "ping": {
         "synt": "ping",
